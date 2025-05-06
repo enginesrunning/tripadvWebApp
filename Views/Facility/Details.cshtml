@@ -1,0 +1,152 @@
+﻿@model TravelReviewApp.Models.Facility
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="container my-5">
+    <!-- Header Section -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-8">
+            <h1 class="display-5 text-primary">@Model.Name</h1>
+            <p class="lead mb-1">
+                <span class="badge bg-info">@Model.Type</span>
+                @if (Model.Location != null)
+                {
+                    <span class="ms-2">@Model.Location.City, @Model.Location.Country</span>
+                }
+            </p>
+        </div>
+        <div class="col-md-4 text-md-end mt-3 mt-md-0">
+            <div class="btn-group">
+                <a asp-action="Edit" asp-route-id="@Model.FacilityID" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Edit
+                </a>
+                <a asp-action="Index" class="btn btn-outline-secondary">
+                    <i class="fas fa-arrow-left"></i> Back
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Description & Details -->
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Description -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-3">About this Facility</h4>
+                    <p class="card-text">@Model.Description</p>
+
+                    <!-- Location -->
+                    <hr class="my-4" />
+                    <h5 class="mb-3">Location</h5>
+                    @if (Model.Location != null)
+                    {
+                        <address>
+                            <strong>@Model.Location.Address</strong><br />
+                            @Model.Location.City, @Model.Location.Country<br />
+                            <small class="text-muted">
+                                Coordinates: @Model.Location.Latitude, @Model.Location.Longitude
+                            </small>
+                        </address>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No location information available.</p>
+                    }
+
+                    <!-- Amenities -->
+                    <hr class="my-4" />
+                    <h5 class="mb-3">Amenities</h5>
+                    @if (Model.FacilityAmenities != null && Model.FacilityAmenities.Any())
+                    {
+                        <div class="row">
+                            @foreach (var facilityAmenity in Model.FacilityAmenities)
+                            {
+                                <div class="col-md-6 col-lg-4 mb-2">
+                                    <div class="d-flex align-items-center">
+                                        <i class="fas fa-check-circle text-success me-2"></i>
+                                        <span>@facilityAmenity.Amenity.Name</span>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No amenities information available.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Images -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h4 class="mb-0">Images</h4>
+                </div>
+                <div class="card-body">
+                    @if (Model.Images != null && Model.Images.Any())
+                    {
+                        <div class="row">
+                            @foreach (var image in Model.Images)
+                            {
+                                <div class="col-md-4 mb-3">
+                                    <div class="card h-100">
+                                        <img src="@image.Url" class="card-img-top" alt="@image.Caption ?? " Facility image"" />
+                                        @if (!string.IsNullOrWhiteSpace(image.Caption))
+                                        {
+                                            <div class="card-body py-2">
+                                                <p class="card-text small">@image.Caption</p>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No images available for this facility.</p>
+                    }
+                </div>
+            </div>
+
+            <!-- Reviews (if planned) -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h4 class="mb-0">User Reviews</h4>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Reviews functionality coming soon.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar / Metadata -->
+        <div class="col-lg-4 mt-4 mt-lg-0">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle me-1"></i> Facility Metadata
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>ID:</strong> @Model.FacilityID</p>
+                    <p><strong>Created:</strong> @Model.AddedByUserID.ToString("f") ?? "N/A"</p>
+                    <p><strong>Last Updated:</strong> @Model.LastModifiedByUserID?.ToString("f") ?? "N/A"</p>
+                </div>
+            </div>
+
+            <!-- Optionally: Related Facilities, Stats, etc. -->
+            <div class="card shadow-sm">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0">Additional Info</h5>
+                </div>
+                <div class="card-body">
+                    <p class="text-muted">Add related content, usage stats, or admin notes here.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

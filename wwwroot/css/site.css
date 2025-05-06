@@ -1,0 +1,36 @@
+﻿body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+h1, h2, h3, h4, h5 {
+    color: #2c3e50;
+}
+
+.navbar-brand {
+    font-weight: bold;
+}
+
+.btn i {
+    margin-right: 4px;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+}
+
+.badge {
+    font-size: 0.9em;
+}
+
+.alert-info {
+    background-color: #e9f7fd;
+    color: #31708f;
+    border: 1px solid #bce8f1;
+}
+
+footer {
+    border-top: 1px solid #ddd;
+    margin-top: 3rem;
+}

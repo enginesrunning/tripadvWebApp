@@ -1,0 +1,160 @@
+﻿@model TravelReviewApp.ViewModels.FacilityViewModel
+
+@{
+    ViewData["Title"] = "Create Facility";
+}
+
+<div class="container my-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="display-4 text-primary">Create Facility</h1>
+            <p class="lead">Add a new facility to the system using the form below.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Create" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                        <!-- Basic Info -->
+                        <div class="mb-4">
+                            <h4 class="text-primary">Basic Information</h4>
+                            <hr />
+                            <div class="row mb-3">
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <label asp-for="Name" class="control-label"></label>
+                                        <input asp-for="Name" class="form-control" />
+                                        <span asp-validation-for="Name" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label asp-for="Type" class="control-label"></label>
+                                        <select asp-for="Type" asp-items="Model.FacilityTypes" class="form-select"></select>
+                                        <span asp-validation-for="Type" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <div class="form-group">
+                                    <label asp-for="Description" class="control-label"></label>
+                                    <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                                    <span asp-validation-for="Description" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Location Info -->
+                        <div class="mb-4">
+                            <h4 class="text-primary">Location</h4>
+                            <hr />
+                            <div class="mb-3">
+                                <div class="form-group">
+                                    <label asp-for="Address" class="control-label"></label>
+                                    <input asp-for="Address" class="form-control" />
+                                    <span asp-validation-for="Address" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="City" class="control-label"></label>
+                                        <input asp-for="City" class="form-control" />
+                                        <span asp-validation-for="City" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Country" class="control-label"></label>
+                                        <input asp-for="Country" class="form-control" />
+                                        <span asp-validation-for="Country" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Latitude" class="control-label"></label>
+                                        <input asp-for="Latitude" class="form-control" />
+                                        <span asp-validation-for="Latitude" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label asp-for="Longitude" class="control-label"></label>
+                                        <input asp-for="Longitude" class="form-control" />
+                                        <span asp-validation-for="Longitude" class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Amenities -->
+                        <div class="mb-4">
+                            <h4 class="text-primary">Amenities</h4>
+                            <hr />
+                            <div class="form-group">
+                                <label asp-for="SelectedAmenities" class="control-label mb-2"></label>
+                                <div class="row">
+                                    @foreach (var amenity in Model.AmenityList)
+                                    {
+                                        <div class="col-md-4 mb-2">
+                                            <div class="form-check">
+                                                <input type="checkbox" name="SelectedAmenities[]" value="@amenity.Value" class="form-check-input" />
+                                                <label class="form-check-label">@amenity.Text</label>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Form Actions -->
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Create
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Help Card -->
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="card-title mb-0">
+                        <i class="fas fa-info-circle"></i> Help
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p>Fill in all required fields to create a new facility. The submission will be reviewed by an administrator before becoming publicly visible.</p>
+                    <p>Use the latitude and longitude fields to set the precise location. A map widget will be added in future versions.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            // Page-specific JS here if needed
+        });
+    </script>
+}

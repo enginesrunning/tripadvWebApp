@@ -1,0 +1,148 @@
+﻿@model TravelReviewApp.ViewModels.FacilityViewModel
+
+@{
+    ViewData["Title"] = "Edit Facility";
+}
+
+<div class="container my-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="display-5 text-primary">Edit Facility</h1>
+            <p class="lead">Update details for an existing facility.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Form Column -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <form asp-action="Edit" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                        <input type="hidden" asp-for="FacilityID" />
+
+                        <!-- Basic Information -->
+                        <h4 class="text-primary">Basic Information</h4>
+                        <hr />
+
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label asp-for="Name" class="form-label"></label>
+                                <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Type" class="form-label"></label>
+                                <select asp-for="Type" asp-items="Model.FacilityTypes" class="form-select"></select>
+                                <span asp-validation-for="Type" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label"></label>
+                            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Location Section -->
+                        <h4 class="text-primary mt-4">Location</h4>
+                        <hr />
+
+                        <div class="mb-3">
+                            <label asp-for="Address" class="form-label"></label>
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="City" class="form-label"></label>
+                                <input asp-for="City" class="form-control" />
+                                <span asp-validation-for="City" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Country" class="form-label"></label>
+                                <input asp-for="Country" class="form-control" />
+                                <span asp-validation-for="Country" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Latitude" class="form-label"></label>
+                                <input asp-for="Latitude" class="form-control" />
+                                <span asp-validation-for="Latitude" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Longitude" class="form-label"></label>
+                                <input asp-for="Longitude" class="form-control" />
+                                <span asp-validation-for="Longitude" class="text-danger"></span>
+                            </div>
+                        </div>
+
+                        <!-- Amenities -->
+                        <h4 class="text-primary mt-4">Amenities</h4>
+                        <hr />
+
+                        <div class="mb-4">
+                            <label asp-for="SelectedAmenities" class="form-label mb-2"></label>
+                            <div class="row">
+                                @foreach (var amenity in Model.AmenityList)
+                                {
+                                    <div class="col-md-4 mb-2">
+                                        <div class="form-check">
+                                            <input type="checkbox"
+                                                   name="SelectedAmenities"
+                                                   value="@amenity.Value"
+                                                   class="form-check-input"
+                                            @(Model.SelectedAmenities != null && Model.SelectedAmenities.Contains(int.Parse(amenity.Value)) ? "checked" : "") />
+                                            <label class="form-check-label">@amenity.Text</label>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to List
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help Sidebar -->
+        <div class="col-lg-4 mt-4 mt-lg-0">
+            <div class="card shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-info-circle"></i> Help
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <p>Update the facility's name, type, and description as necessary.</p>
+                    <p>Ensure the address and geographical coordinates are accurate.</p>
+                    <p>Amenities help users find the right facilities—select all that apply.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            // Additional JavaScript for Edit Facility page
+        });
+    </script>
+}
